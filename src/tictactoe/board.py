@@ -10,8 +10,12 @@ class BoardManager:
         self.diag_totals = [0,0]
 
     def print_board(self):
-        for row in self.board.board:
-            print('|'.join([*row]))
+        print("  1|2|3")
+        for row,arr in enumerate(self.board.board):
+            print(row+1,end='|')
+            print('|'.join([*arr]))
+
+
 
     def place_move(self,row,col,player_grph):
             self.board.board[row][col] = player_grph
