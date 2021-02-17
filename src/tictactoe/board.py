@@ -15,8 +15,6 @@ class BoardManager:
             print(row+1,end='|')
             print('|'.join([*arr]))
 
-
-
     def place_move(self,row,col,player_grph):
             self.board.board[row][col] = player_grph
 
@@ -31,7 +29,3 @@ def main():
     bm.print_board()
     bm.place_move(1,2)
     bm.print_board()
-
-
-if __name__ == '__main__':
-    main()

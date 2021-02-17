@@ -11,7 +11,6 @@ def clear():
         _ = system('clear')
 
 
-
 class Game:
     def __init__(self):
         self.b_mng = BoardManager()
@@ -22,24 +21,22 @@ class Game:
         self.player_turn = self.player1
 
     def game(self):
-        print("Welcome to Tic-Tac-Toe. Press Enter to Play")
-        input()
+        input("Welcome to Tic-Tac-Toe. Press Enter to Play")
         clear()
 
         while self.game_state == 0:
             self.b_mng.print_board()
-            row = int(input("Enter Row:")) - 1
-            col = int(input("Enter Column:")) - 1
 
+            row, col = self.player_input()
             self.b_mng.place_move(row,col,self.player_turn[1])
-            self.b_mng.print_board()
+
             self.add_totals(row,col)
             self.check_win(row,col)
+
             self.switch_players()
             clear()
 
         print(f"Winner is:{self.game_state}")
-
 
 
     def switch_players(self):
@@ -65,3 +62,9 @@ class Game:
             self.game_state = self.player1[1]
         elif self.b_mng.rows_totals[row] == w2 or self.b_mng.cols_totals[col] == w2 or self.b_mng.diag_totals[0] == w2 or self.b_mng.diag_totals[1] == w2:
             self.game_state = self.player2[1]
+
+    def player_input(self):
+        row = int(input("Enter Row:")) - 1
+        col = int(input("Enter Column:")) - 1
+
+        return [row,col]

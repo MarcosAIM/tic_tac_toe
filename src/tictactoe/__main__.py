@@ -2,8 +2,7 @@ from tictactoe.game import Game
 
 
 def main():
-    g = Game()
-    g.game()
+    Game().game()
 
 
 if __name__ == '__main__':
