@@ -1,7 +1,7 @@
 from tictactoe.board import BoardManager
 from tictactoe.board import PositionError
 from time import sleep
-from tictactoe.player import player
+from tictactoe.player import PlayerStrategies
 
 #function for clearing command line
 def clear():
@@ -20,10 +20,11 @@ def clear():
 class Game:
     def __init__(self):
         self.b_mng = BoardManager()
-        self.game_state = 0
+        self.player_strats = PlayerStrategies(self.b_mng)
 
-        self.player1 = [1,'X',player.player_input, []]
-        self.player2 = [5,'O',player.player_input, []]
+        self.game_state = 0
+        self.player1 = [1,'X',self.player_strats.random]
+        self.player2 = [5,'O',self.player_strats.random]
 
         self.player_turn = self.player1
 
@@ -33,19 +34,15 @@ class Game:
         clear()
 
         while self.game_state == 0:
-            if self.b_mng.positions == False: #tie game
-                self.game_state = 3
-                break
-
             self.b_mng.print_board()
 
             try:
-                row,col = self.player_turn[2](*self.player_turn[3])
+                row,col = self.player_turn[2]()
                 self.b_mng.place_move(row,col,self.player_turn[1])
-
             except IndexError:
                 print("Row or Column out of range please try again......")
-                sleep(1)
+                print(self.b_mng.positions)
+                sleep(5)
             except PositionError:
                 print("Position filled. try again....")
                 sleep(1)
@@ -72,8 +69,8 @@ class Game:
     def add_totals(self,row,col):
         self.b_mng.rows_totals[row] += self.player_turn[0]
         self.b_mng.cols_totals[col] += self.player_turn[0]
-        pos = row * 3 + col
 
+        pos = row * 3 + col
         if pos == 4:
             self.b_mng.diag_totals[0] += self.player_turn[0]
             self.b_mng.diag_totals[1] += self.player_turn[0]
@@ -84,6 +81,9 @@ class Game:
 
 
     def check_win(self,row,col):
+        if not self.b_mng.positions: #tie game
+            self.game_state = 3
+
         w1 = self.player1[0] * 3
         w2 = self.player2[0] * 3
         if self.b_mng.rows_totals[row] == w1 or self.b_mng.cols_totals[col] == w1 or self.b_mng.diag_totals[0] == w1 or self.b_mng.diag_totals[1] == w1:

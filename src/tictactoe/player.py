@@ -1,18 +1,22 @@
 import random
+from tictactoe.board import BoardManager
 
-
-class player:
-    def __init__(self):
+class PlayerStrategies:
+    def __init__(self,bmg:BoardManager):
         self.modes = ['random', 'efficient','input']
         self.mode = self.modes[0]
+        self.bmg = bmg
 
-    def player_input():
+    def console_input(self):
         row = int(input("Enter Row:")) - 1
         col = int(input("Enter Column:")) - 1
-        return [row,col]
+        return row, col
 
-    def random(*positions):
-        pos = random.choice(positions)
+    def random(self):
+        pos = random.choice(self.bmg.positions)
         row = pos // 3
         col = pos - (row * 3)
         return row, col
+
+    def efficient(self):
+        pass
