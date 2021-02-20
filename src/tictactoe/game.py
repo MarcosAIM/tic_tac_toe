@@ -23,8 +23,8 @@ class Game:
         self.player_strats = PlayerStrategies(self.b_mng)
 
         self.game_state = 0
-        self.player1 = [1,'X',self.player_strats.random]
-        self.player2 = [5,'O',self.player_strats.random]
+        self.player1 = [1,'X',self.player_strats.random,[]]
+        self.player2 = [5,'O',self.player_strats.efficient,[5,1]]
 
         self.player_turn = self.player1
 
@@ -35,9 +35,10 @@ class Game:
 
         while self.game_state == 0:
             self.b_mng.print_board()
+            sleep(1)
 
             try:
-                row,col = self.player_turn[2]()
+                row,col = self.player_turn[2](*self.player_turn[3])
                 self.b_mng.place_move(row,col,self.player_turn[1])
             except IndexError:
                 print("Row or Column out of range please try again......")
