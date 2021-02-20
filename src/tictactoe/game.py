@@ -38,8 +38,6 @@ class Game:
                 break
 
             self.b_mng.print_board()
-            print(self.b_mng.diag_totals[0])
-            print(self.b_mng.diag_totals[1])
 
             try:
                 row,col = self.player_turn[2](*self.player_turn[3])
@@ -74,15 +72,14 @@ class Game:
     def add_totals(self,row,col):
         self.b_mng.rows_totals[row] += self.player_turn[0]
         self.b_mng.cols_totals[col] += self.player_turn[0]
-        print(row+col)
+        pos = row * 3 + col
 
-
-        if (row + col) % 4 == 0 and (row + col) % 2 == 0:
+        if pos == 4:
             self.b_mng.diag_totals[0] += self.player_turn[0]
             self.b_mng.diag_totals[1] += self.player_turn[0]
-        elif (row + col) % 4 == 0:
+        elif pos % 4 == 0:
             self.b_mng.diag_totals[0] += self.player_turn[0]
-        elif (row + col) % 2 == 0:
+        elif pos % 2 == 0:
             self.b_mng.diag_totals[1] += self.player_turn[0]
 
 
