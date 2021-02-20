@@ -18,13 +18,14 @@ def clear():
 #2 player two won
 #3 tie
 class Game:
-    def __init__(self):
+    def __init__(self,player1_strat,player2_strat,time_between = 0):
         self.b_mng = BoardManager()
         self.player_strats = PlayerStrategies(self.b_mng)
+        self.time_between = time_between
 
         self.game_state = 0
-        self.player1 = [1,'X',self.player_strats.random,[]]
-        self.player2 = [5,'O',self.player_strats.efficient,[5,1]]
+        self.player1 = [1,'X',self.player_strats.modes[player1_strat],[1,5]]
+        self.player2 = [5,'O',self.player_strats.modes[player2_strat],[5,1]]
 
         self.player_turn = self.player1
 
@@ -35,7 +36,7 @@ class Game:
 
         while self.game_state == 0:
             self.b_mng.print_board()
-            sleep(1)
+            sleep(self.time_between)
 
             try:
                 row,col = self.player_turn[2](*self.player_turn[3])
@@ -59,6 +60,8 @@ class Game:
 
         self.b_mng.print_board()
         print(f"Winner is:{self.game_state}")
+
+        return self.game_state
 
 
     def switch_players(self):

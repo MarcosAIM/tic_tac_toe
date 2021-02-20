@@ -3,16 +3,15 @@ from tictactoe.board import BoardManager
 
 class PlayerStrategies:
     def __init__(self,bmg:BoardManager):
-        self.modes = ['random', 'efficient','input']
-        self.mode = self.modes[0]
+        self.modes = {'random':self.random, 'efficient':self.efficient,'console_input':self.console_input}
         self.bmg = bmg
 
-    def console_input(self):
+    def console_input(self,*args):
         row = int(input("Enter Row:")) - 1
         col = int(input("Enter Column:")) - 1
         return row, col
 
-    def random(self):
+    def random(self,*args):
         return PlayerStrategies.pos_to_row_col(random.choice(self.bmg.positions))
 
     def efficient(self,*args):

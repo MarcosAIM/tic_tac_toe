@@ -2,7 +2,7 @@ from tictactoe.game import Game
 
 
 def main():
-    Game().game()
+    Game('random','random').game()
 
 
 if __name__ == '__main__':
